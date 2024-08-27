@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { GlobalContext } from '../context/GlobalState';
+import React, { useContext, useState } from "react";
+import { GlobalContext } from "../context/GlobalState";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 export const Transaction = ({ transaction }) => {
   const { deleteTransaction, updateTransaction } = useContext(GlobalContext);
@@ -8,7 +9,7 @@ export const Transaction = ({ transaction }) => {
   const [editText, setEditText] = useState(transaction.text);
   const [editAmount, setEditAmount] = useState(transaction.amount);
 
-  const sign = transaction.amount < 0 ? '-' : '+';
+  const sign = transaction.amount < 0 ? "Expence" : "Income";
 
   const handleSave = () => {
     const updatedTransaction = {
@@ -24,7 +25,9 @@ export const Transaction = ({ transaction }) => {
   return (
     <li
       className={`flex justify-between items-center bg-white p-3 my-2 shadow-md rounded-lg ${
-        transaction.amount < 0 ? 'border-l-4 border-red-500' : 'border-l-4 border-green-500'
+        transaction.amount < 0
+          ? "border-l-4 border-red-500"
+          : "border-l-4 border-green-500"
       }`}
     >
       {isEditing ? (
@@ -53,9 +56,12 @@ export const Transaction = ({ transaction }) => {
       ) : (
         <>
           <span className="flex-1 text-lg">{transaction.text}</span>
-          <span className="flex-1 text-lg">
-            {sign}${Math.abs(transaction.amount)}
+          <span className="flex-1 text-lg font-semibold text-gray-700 flex items-center space-x-1">
+            {sign}
+            <FaIndianRupeeSign className="text-black" />
+            <span>{Math.abs(transaction.amount)}</span>
           </span>
+
           <div className="flex space-x-2">
             <button
               onClick={() => deleteTransaction(transaction.id)}
